@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recruiter List</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Checked-In List</h1>
+        <ul id="checked-in-list"></ul>
+
+        <h1>Not Scheduled List</h1>
+        <ul id="not-scheduled-list"></ul>
+
+        <h1>Interview Check-In List</h1>
+        <ul id="interview-check-in-list"></ul>
+    </div>
+    <script>
+        // Function to update recruiter lists
+        function updateRecruiterList(data) {
+            const checkedInList = document.getElementById('checked-in-list');
+            const notScheduledList = document.getElementById('not-scheduled-list');
+            const interviewCheckInList = document.getElementById('interview-check-in-list');
+
+            // Clear existing lists
+            checkedInList.innerHTML = '';
+            notScheduledList.innerHTML = '';
+            interviewCheckInList.innerHTML = '';
+
+            // Populate checked-in list
+            data.checked_in_list.forEach(attendee => {
+                const li = document.createElement('li');
+                li.textContent = `${attendee.name} - ${attendee.time} - ${attendee.scheduled_time}${attendee.late ? ' (Late)' : ''}`;
+                checkedInList.appendChild(li);
+            });
+
+            // Populate not scheduled list
+            data.not_scheduled_list.forEach(attendee => {
+                const li = document.createElement('li');
+                li.textContent = `${attendee.name} - ${attendee.time}`;
+                notScheduledList.appendChild(li);
+            });
+
+            // Populate interview check-in list
+            data.interview_check_in_list.forEach(attendee => {
+                const li = document.createElement('li');
+                li.textContent = `${attendee.name} - ${attendee.time}`;
+                interviewCheckInList.appendChild(li);
+            });
+        }
+
+        // EventSource to receive updates
+        if (!!window.EventSource) {
+            const source = new EventSource('/recruiter_list_updates');
+            source.onmessage = function(event) {
+                const data = JSON.parse(event.data);
+                updateRecruiterList(data);
+            };
+        } else {
+            console.error("Your browser does not support Server-Sent Events.");
+        }
+    </script>
+</body>
+</html>

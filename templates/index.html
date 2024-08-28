@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Check-In</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <header>
+        <img src="{{ url_for('static', filename='suntec_Charcoal.png') }}" alt="Company Logo" class="logo">
+    </header>
+    <div class="container">
+        <h1>Welcome to the Suntec Check-In</h1>
+        <h4>Please choose your reason for visiting from the options below.</h4>
+        <div class="buttons-container">
+            <button onclick="location.href='/check_in?type=interview'">Interview</button>
+            <button onclick="location.href='/check_in?type=orientation'">Orientation</button>
+            <button onclick="location.href='/check_in?type=other'">Other</button>
+        </div>
+    </div>
+</body>
+</html>

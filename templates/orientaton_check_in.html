@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orientation Check-In</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Orientation Check-In</h1>
+        <form action="/check_in?type=orientation" method="post">
+            <label for="name">Enter your full name:</label>
+            <input type="text" id="name" name="name" required>
+            <button type="submit">Check In</button>
+        </form>
+    </div>
+</body>
+</html>
